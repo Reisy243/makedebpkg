@@ -1,0 +1,13 @@
+#! /bin/bash
+
+function wah {
+	echo wah
+	exit 0
+}
+
+if [ "$#" -eq 0 ]; then
+	wah
+else
+	echo carlos
+	exit 1
+fi
