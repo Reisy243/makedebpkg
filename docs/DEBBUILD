@@ -1,0 +1,7 @@
+maintainer="juan"
+pkgname=Carlos
+pkgver=7
+pkgrel=1
+pkgdesc="pepe"
+arch=("all")
+depends=("carlos" "pepe" "juan")

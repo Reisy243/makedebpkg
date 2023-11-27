@@ -1,13 +1,32 @@
 #! /bin/bash
 
+if [ "$(echo $0 | cut -c 1)" == "." ]; then
+	verbose=true
+	source funcs/*.sh
+else
+	verbose=false
+	source /usr/share/makedebpkg/*.sh
+fi
+
+error=0
+
 function wah {
 	echo wah
-	exit 0
 }
 
 if [ "$#" -eq 0 ]; then
 	wah
+	exit 0
 else
-	echo carlos
-	exit 1
+	cmds=("-h" "--help" "-V" "--version")
+	for arg in "${cmds[@]}"; do
+		if ! [ "$1" == "$arg" ]; then
+			error=$[error+1]
+		else
+			$1
+			exit 0
+		fi
+	done
 fi
+
+echo "makedebpkg: la opción no es válida '$1'"
