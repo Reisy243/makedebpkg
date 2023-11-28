@@ -22,7 +22,7 @@ function blanckCheck {
 		error=$[error+1]
 	fi
 	for i in "${depends[@]}"; do
-		if [ "$i" == "" ]; then
+		if [ "$i" == "" ] && [ "${#depends[@]}" -ne 1 ]; then
 			echo -e "\e[0;31m==> ERROR: \e[1;37mdepends no puede estar vacío."
 			error=$[error+1]
 		fi

@@ -11,6 +11,7 @@ for file in $(ls $funcspaths); do
 done
 
 depends=("")
+section=""
 
 function wah {
 	# Error management
@@ -42,6 +43,11 @@ function wah {
 	echo -e "\e[1;32m==> \e[1;37mCreando el paquete «$pkgname»..."
 	echo -e "	\e[1;34m-> \e[1;37mGenerando el archivo DEBIAN/control..."
 	echo "Package: $pkgname" >> $pkgdir/DEBIAN/control
+
+	if [ "$section" != "" ]; then
+		echo "Section: $section" >> $pkgdir/DEBIAN/control
+	fi
+
 	echo "Version: $pkgver-$pkgrel" >> $pkgdir/DEBIAN/control
 	echo "Architecture: ${arch[$archNum]}" >> $pkgdir/DEBIAN/control
 	echo "Maintainer: $maintainer" >> $pkgdir/DEBIAN/control

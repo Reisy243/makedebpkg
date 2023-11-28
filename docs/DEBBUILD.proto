@@ -9,6 +9,7 @@ pkgrel=1
 epoch=
 pkgdesc=""
 arch=()
+section=""
 url=""
 license=('GPL')
 groups=()
