@@ -1,12 +1,14 @@
 #! /bin/bash
 
 if [ "$(echo $0 | cut -c 1)" == "." ]; then
-	for file in $(ls funcs); do
-		source funcs/$file
-	done
+	funcspaths="funcs"
 else
-	source /usr/share/makedebpkg/*.sh
+	funcspaths="/usr/share/makedebpkg"
 fi
+
+for file in $(ls $funcspaths); do
+	source $funcspaths/$file
+done
 
 depends=("")
 
