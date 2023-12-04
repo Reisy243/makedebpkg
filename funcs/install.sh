@@ -3,10 +3,6 @@ function -i {
 	debCheck
 	source DEBBUILD
 
-	# Checks
-	blanckCheck	# Checking for blank spaces in DEBBUILD.
-	archCheck	# Checking for a valid architecture.
-
 	source DEBBUILD
 	if [ -f "$pkgname-$pkgver-$pkgrel-${arch[$archNum]}.deb" ]; then
 		echo -e "\e[1;33m==> ADVERTENCIA: \e[1;37mYa se ha compilado un paquete, instalando dicho paquete..."

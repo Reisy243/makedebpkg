@@ -10,66 +10,9 @@ for file in $(ls $funcspaths); do
 	source $funcspaths/$file
 done
 
-depends=("")
+depends=()
 section=""
-
-function wah {
-	# Error management
-	if ! [ "$error" -eq 0 ]; then
-		exit 1
-	fi
-
-	pkgdir="$(pwd)/pkg/$pkgname"
-	srcdir="$(pwd)/src/"
-	orgpwd=$(pwd)
-
-	echo -e "\e[1;32m==> \e[1;37mCreando el paquete: $pkgname $pkgver-$pkgrel ($(date +"%a %d %b %Y %T %Z" -u))"
-	if ! [ -d "src" ]; then
-		mkdir "$srcdir"
-	fi
-
-	if [ -d "pkg" ]; then
-		echo -e "\e[1;32m==> \e[1;37mEliminando el directorio \$pkgdir/..."
-		rm -rf $pkgdir
-	fi
-
-	mkdir -p "$pkgdir/DEBIAN"
-
-	if type package >/dev/null 2>&1; then
-		echo -e "\e[1;32m==> \e[1;37mIniciando package()..."
-		package
-	fi
-
-	echo -e "\e[1;32m==> \e[1;37mCreando el paquete «$pkgname»..."
-	echo -e "	\e[1;34m-> \e[1;37mGenerando el archivo DEBIAN/control..."
-	echo "Package: $pkgname" >> $pkgdir/DEBIAN/control
-
-	if [ "$section" != "" ]; then
-		echo "Section: $section" >> $pkgdir/DEBIAN/control
-	fi
-
-	echo "Version: $pkgver-$pkgrel" >> $pkgdir/DEBIAN/control
-	echo "Architecture: ${arch[$archNum]}" >> $pkgdir/DEBIAN/control
-	echo "Maintainer: $maintainer" >> $pkgdir/DEBIAN/control
-	echo "Description: $pkgdesc" >> $pkgdir/DEBIAN/control
-	echo "Installed-Size: $(du -ks $pkgdir --exclude $pkgdir/DEBIAN | cut -f 1)" >> $pkgdir/DEBIAN/control
-
-	if [ "${depends[0]}" != "" ]; then
-		actarch="Depends: ${depends[0]}"
-
-		if [ "${#depends[@]}" -gt 1 ]; then
-			for ((i = 1; i < "${#depends[@]}"; i++)); do
-				actarch+=", ${depends[$i]}"
-			done
-		fi
-		echo $actarch >> $pkgdir/DEBIAN/control
-	fi
-
-	echo -e "	\e[1;34m-> \e[1;37mGenerando el paquete..."
-	dpkg-deb --build --root-owner-group $pkgdir "$orgpwd/$pkgname-$pkgver-$pkgrel-${arch[$archNum]}.deb" > /dev/null
-
-	echo -e "\e[1;32m==> \e[1;37mCompilación terminada: $pkgname $pkgver-$pkgrel ($(date +"%a %d %b %Y %T %Z" -u))"
-}
+pkgpriority=""
 
 if [ "$#" -eq 0 ]; then
 	# DEBBUILD check
@@ -77,9 +20,7 @@ if [ "$#" -eq 0 ]; then
 	source DEBBUILD
 
 	# Checks
-	blanckCheck	# Checking for blank spaces in DEBBUILD.
-	archCheck	# Checking for a valid architecture.
-	compCheck	# Checking if .deb are alrready build.
+	compCheck		# Checking if .deb are alrready build.
 
 	wah
 	exit 0

@@ -1,4 +1,5 @@
-ver="1.0.1-alpha"
+
+ver="1.0-2-alpha"
 
 function -V {
 	echo -e "makedebpkg (dpkg) $ver"

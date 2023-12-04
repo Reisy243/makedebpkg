@@ -3,12 +3,13 @@
 # for your package! If it is unknown, then please put 'unknown'.
 
 maintainer=""
-pkgname=NAME
-pkgver=VERSION
-pkgrel=1
+pkgname=name
+pkgver=1.0
+pkgrel=R1
 epoch=
 pkgdesc=""
 arch=()
+pkgpriority=""
 section=""
 url=""
 license=('GPL')
