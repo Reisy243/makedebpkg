@@ -31,18 +31,16 @@ function blanckCheck {
 
 function priorityCheck {
 	valid=false
-	if [ "$pkgpriority" != "" ]; then
-		priorities=("required" "important" "standard" "optional" "extra")
-		for i in "${priorities[@]}"; do
-			if [ "$pkgpriority" == "$i" ]; then
-				valid=true
-			fi
-		done
-
-		if [ "$valid" == false ]; then
-			echo -e "\e[0;31m==> ERROR: \e[1;37m$pkgpriority no es una prioridad valida."
-			error=$[error+1]
+	priorities=("required" "important" "standard" "optional" "extra")
+	for i in "${priorities[@]}"; do
+		if [ "$pkgpriority" == "$i" ]; then
+			valid=true
 		fi
+	done
+
+	if [ "$valid" == false ]; then
+		echo -e "\e[0;31m==> ERROR: \e[1;37m$pkgpriority no es una prioridad valida."
+		error=$[error+1]
 	fi
 }
 
@@ -122,4 +120,21 @@ validVerCheck(){
 		error=$[error+1]
 	fi
 	shopt -u nocasematch
+}
+
+arrayChecker(){
+	local var="$1"
+	if [[ "$(declare -p "$var" 2>/dev/null)" =~ "declare -a" ]]; then
+		echo -e "\e[0;31m==> ERROR: \e[1;37m$var no puede ser un arreglo."
+		error=$[error+1]
+	fi
+}
+
+arrayCheck(){
+	arrayChecker maintainer
+	arrayChecker pkgdesc
+	arrayChecker pkgrel
+	arrayChecker pkgver
+	arrayChecker pkgpriority
+	arrayChecker section
 }

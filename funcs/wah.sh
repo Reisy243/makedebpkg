@@ -1,6 +1,7 @@
 function wah {
 	BUILDDIR="$PWD"
 
+	arrayCheck		# Checking for arrays and strings
 	capsCheck		# Checking for capital letters pkgname.
 	lettersCheck	# Checking for ñ in pkgname.
 	validVerCheck	# Checking for number in pkgver
